@@ -131,9 +131,9 @@ dmypy.json
 # Project specific
 data/raw/*
 !data/raw/.gitkeep
-models/*.pkl
-models/*.joblib
-models/*.model
+# models/*.pkl
+# models/*.joblib
+# models/*.model
 
 # IDE
 .vscode/
@@ -152,3 +152,12 @@ Thumbs.db
 
 # Streamlit
 .streamlit/
+
+# CloudType deployment
+.cloudtype/
+cloudtype.yml.bak
+
+# Large files (consider using Git LFS if models are too large)
+# *.pkl
+# *.joblib
+# *.model
