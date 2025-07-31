@@ -5,6 +5,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from collections import Counter
+import matplotlib
+matplotlib.rc('font', family='Malgun Gothic')
 
 # 페이지 설정
 st.set_page_config(
