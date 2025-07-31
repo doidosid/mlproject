@@ -6,7 +6,26 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from collections import Counter
 import matplotlib
-matplotlib.rc('font', family='Malgun Gothic')
+import platform
+
+# 운영체제별 한글 폰트 설정
+def setup_korean_font():
+    system = platform.system()
+    if system == 'Windows':
+        matplotlib.rc('font', family='Malgun Gothic')
+    elif system == 'Darwin':  # macOS
+        matplotlib.rc('font', family='AppleGothic')
+    else:  # Linux (클라우드 환경)
+        # 한글 폰트 대안 설정
+        try:
+            matplotlib.rc('font', family='DejaVu Sans')
+        except:
+            matplotlib.rc('font', family='sans-serif')
+    
+    matplotlib.rcParams['axes.unicode_minus'] = False
+
+# 폰트 설정 적용
+setup_korean_font()
 
 # 페이지 설정
 st.set_page_config(
@@ -186,6 +205,18 @@ def main():
                     
                     # 신뢰도 차트
                     fig, ax = plt.subplots(figsize=(6, 4))
+                    
+                    # 클라우드 환경을 위한 폰트 재설정
+                    system = platform.system()
+                    if system == 'Windows':
+                        plt.rcParams['font.family'] = 'Malgun Gothic'
+                    elif system == 'Darwin':  # macOS
+                        plt.rcParams['font.family'] = 'AppleGothic'
+                    else:  # Linux (클라우드)
+                        plt.rcParams['font.family'] = 'DejaVu Sans'
+                    
+                    plt.rcParams['axes.unicode_minus'] = False
+                    
                     colors = [emotion_colors[em] for em in emotions]
                     bars = ax.bar(emotions, probabilities, color=colors, alpha=0.8)
                     
@@ -198,10 +229,6 @@ def main():
                     ax.set_title('감정별 신뢰도', fontweight='bold')
                     ax.set_ylabel('신뢰도')
                     ax.set_ylim(0, 1)
-                    
-                    # 한글 폰트 설정 (맥)
-                    plt.rcParams['font.family'] = 'AppleGothic'
-                    plt.rcParams['axes.unicode_minus'] = False
                     
                     st.pyplot(fig)
                     
